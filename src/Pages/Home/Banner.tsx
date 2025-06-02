@@ -28,10 +28,12 @@ useEffect(() => {
         elements_selector: ".lazyload",
         threshold: 300, 
       });
+
     }
   }, [movies]);
 
-  const randomMovies = [...movies]  
+  const filteredMovies = movies.filter(m => m.backdrop_path);
+  const randomMovies = [...filteredMovies]  
   .sort(() => Math.random() - 0.5)
   .slice(0, 1); 
 
@@ -39,7 +41,7 @@ useEffect(() => {
   return (
     <div>
       {randomMovies.map((movie) => (
-        <div className="relative w-full h-[70vh] bg-white aspect-video overflow-hidden">
+        <div key={movie.id} className="relative w-full h-[70vh] bg-white aspect-video overflow-hidden">
           <img
             src={`https://image.tmdb.org/t/p/w92${movie.backdrop_path}`}
              data-src={`https://image.tmdb.org/t/p/w780${movie.backdrop_path}`}
