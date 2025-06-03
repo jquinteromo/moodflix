@@ -2,9 +2,9 @@ import { Search, Heart } from "lucide-react";
 
 export default function Navbar() {
   return (
-    <div className="h-24 w-full bg-[#0F0F0F] grid grid-cols-3 place-items-center   ">
-      <div className="  inline-flex items-center  md:mr-48 ml-3 md:ml-3">
-        <img src="/Icons_Navbar/M F.png" className="h-16 md:h-20 w-16 md:w-20 "></img>
+    <div className="fixed top-0 left-0 w-full z-50 h-24 bg-gradient-to-b from-[#0F0F0F] via-[#0F0F0F] to-transparent via-80% to-100% grid grid-cols-3 place-items-center">
+      <div className="   inline-flex items-center  md:mr-48 ml-3 md:ml-3">
+        <img src="/Icons_Navbar/M F.png" className="h-16 md:h-16 w-16 md:w-16 "></img>
         <h2 className=" md:opacity-100 opacity-0 md:ml-0   text-lg md:text-4xl font-bold bg-gradient-to-r from-[#FFD700] to-[#FFA500] text-transparent bg-clip-text">
           Moodflix
         </h2>
