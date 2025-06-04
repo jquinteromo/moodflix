@@ -20,7 +20,8 @@ export default function Banner() {
   const [src, setSrc] = useState("");
 
   useEffect(() => {
-    fetch(`${BASE_URL}/movie/popular?api_key=${API_KEY}&language=es-ES&page=19`)
+    fetch(`${BASE_URL}/movie/popular?api_key=${API_KEY}&language=es-ES&page=19
+    `)
       .then((res) => res.json())
       .then((data) => {
         // setMovies(data.results);
@@ -48,7 +49,7 @@ export default function Banner() {
   if (!randomMovie) return null;
   return (
     <div>
-      <div className="mt-16 relative w-full h-[70vh] bg-white aspect-video overflow-hidden">
+      <div className="mt-16 relative w-full h-[50vh] md:h-[70vh] bg-white aspect-video overflow-hidden">
         <img
           // src={`https://image.tmdb.org/t/p/w300${movie.backdrop_path}`}
           src={src}
