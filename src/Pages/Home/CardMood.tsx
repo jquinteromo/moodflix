@@ -25,6 +25,7 @@ const Moods = [
     emolgi: "😱",
     label: "Asombrado",
     description: "Sorpresa total",
+    color : "#1E90FF"
   },
 ];
 
@@ -42,22 +43,22 @@ export default function CardMood() {
         <br></br> Tocá un emoji y descubrí lo que deberías estar viendo.
       </h2>
 
-      <div className="w-full flex justify-center flex-row gap-7 ">
+      <div className="w-full flex justify-center flex-row gap-7 flex-wrap">
         {Moods.map((mod, index) => (
           <div
             onClick={()=>setselectMood(index)}
             key={index}
-            className={`cursor-pointer flex flex-col gap-2 items-center w-[156px] 
-          flex-wrap py-8  border border-white/30 rounded-xl 
+            className={`cursor-pointer flex flex-col gap-2 items-center md:w-[156px] w-[140px] 
+          flex-wrap md:py-8 py-5  border border-white/30 rounded-xl 
           transition-all duration-300 transform hover:scale-105 ${selectMood === index ?  'bg-[#0F0F0F]':'bg-[#282828]'}`}
           >
-            <div className="text-5xl group-hover:scale-110 transition-transform duration-300">
+            <div className="md:text-5xl text-4xl group-hover:scale-110 transition-transform duration-300">
               {mod.emolgi}
             </div>
-            <h1 className="text-xl font-semibold text-[#D1D5DB]">
+            <h1 className="md:text-xl text-lg font-semibold text-[#D1D5DB]">
               {mod.label}
             </h1>
-            <h1 className="text-sm text-[#D1D5DB]">{mod.description}</h1>
+            <h1 className="md:text-sm text-xs text-[#D1D5DB]">{mod.description}</h1>
           </div>
         ))}
       </div>
