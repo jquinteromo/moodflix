@@ -1,3 +1,6 @@
+import { ChevronRight, ChevronLeft, Play, Plus } from "lucide-react";
+import { useRef } from "react";
+
 type MovieType = {
   id: number;
   title: string;
@@ -13,45 +16,71 @@ interface HijoProps {
 }
 
 export default function CatalogueMovie({ movies }: HijoProps) {
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  const scrollLeft = () => {
+    scrollRef.current?.scrollBy({ left: -300, behavior: "smooth" });
+  };
+
+  const scrollRight = () => {
+    scrollRef.current?.scrollBy({ left: 300, behavior: "smooth" });
+  };
   return (
     <div className="flex flex-col gap-16 mb-10">
-      <div className=" w-full flex flex-row gap-5 px-6 ">
-        {movies.map((movie, index) => (
-          <div key={index} className=" w-56 flex flex-col gap-4">
-            <h1 className="text-[#D1D5DB] text-2xl font-bold mb-3">Mood 😂</h1>
-            <div className="h-72 w-48  ">
-              <img
-                src={`https://image.tmdb.org/t/p/w780${movie.poster_path}`}
-                className="w-full h-full rounded-lg border border-white/10"
-              ></img>
+      <div className="relative">
+        <div
+          ref={scrollRef}
+          className=" w-full flex flex-row gap-5 px-6 overflow-x-auto scroll-smooth whitespace-nowrap select-none"
+          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+        >
+          <button
+            onClick={scrollLeft}
+            className={`absolute top-1/2  -translate-y-1/2 z-10 w-12 h-12 bg-black/90  backdrop-blur-md rounded-full flex items-center justify-center border-2 border-white/20 hover:bg-white/20 transition-colors`}
+          >
+            <ChevronLeft className={`w-6 h-6 text-white`} />
+          </button>
+          <button
+            onClick={scrollRight}
+            className={`absolute top-1/2 right-4 -translate-y-1/2 z-10 w-12 h-12 bg-black/90  backdrop-blur-md rounded-full flex items-center justify-center border-2 border-white/20 hover:bg-white/20 transition-colors`}
+          >
+            <ChevronRight className={`w-6 h-6 text-white`} />
+          </button>
+          {movies.map((movie, index) => (
+            <div
+              key={index}
+              className="flex-shrink-0 md:w-56 w-[150px] flex flex-col gap-4 relative"
+            >
+              <h1 className="text-[#D1D5DB] md:text-2xl text-xl font-bold mb-3">
+                Mood 😂
+              </h1>
+              <div className="md:h-72 h-52 md:w-48 w-36  relative group">
+                <img
+                  src={`https://image.tmdb.org/t/p/w780${movie.poster_path}`}
+                  className="w-full h-full rounded-lg border border-white/10  cursor-pointer hover:brightness-50 transition-transform duration-400 group-hover:brightness-50 group-hover:-translate-y-1"
+                ></img>
+                <button
+                  className={` hover:opacity-55 group-hover:opacity-100 opacity-0  absolute top-1/2 right-16 hover:-translate-y-7 transition-transform duration-300 -translate-y-1/2  w-12 h-12 bg-black/90  backdrop-blur-md rounded-full flex items-center justify-center border bg-gradient-to-r from-[#f4cd56] to-[#b8861d] border-white/20 `}
+                >
+                  <Play className={`w-6 h-6 text-white`} />
+                </button>
+
+                <button
+                  className={`absolute  top-2 right-2 group-hover:opacity-100 opacity-0 bg-black/70  hover:bg-black/90 w-8 h-8 rounded-full flex items-center justify-center transition-colors text-white hover:bg-black/90"
+              `}
+                >
+                  <Plus className="w-4 h-4" />
+                </button>
+              </div>
+
+              <div className=" md:w-52 w-40 flex flex-col">
+                <h1 className="text-[#D1D5DB] md:text-base text-xs font-bold mb-1 break-words whitespace-normal">
+                  {movie.title}
+                </h1>
+                <h2 className="md:text-base text-sm text-[#D1D5DB] ">2022</h2>
+              </div>
             </div>
-           
-            <div className="">
-                 <h1 className="text-[#D1D5DB] text-base font-bold mb-1">{movie.title}</h1>
-                <h2 className="text-[#D1D5DB] ">2022</h2>
-            </div>
-            
-          </div>
-        ))}
-      </div>
-          <div className=" w-full flex flex-row gap-5 px-6 ">
-        {movies.map((movie, index) => (
-          <div key={index} className=" w-56 flex flex-col gap-4">
-            <h1 className="text-[#D1D5DB] text-2xl font-bold mb-3">Mood 😂</h1>
-            <div className="h-72 w-48  ">
-              <img
-                src={`https://image.tmdb.org/t/p/w780${movie.poster_path}`}
-                className="w-full h-full rounded-lg border border-white/10"
-              ></img>
-            </div>
-           
-            <div className="">
-                 <h1 className="text-[#D1D5DB] text-base font-bold mb-1">{movie.title}</h1>
-                <h2 className="text-[#D1D5DB] ">2022</h2>
-            </div>
-            
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );

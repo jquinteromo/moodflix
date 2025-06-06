@@ -48,8 +48,8 @@ export default function CardMood() {
           <div
             onClick={()=>setselectMood(index)}
             key={index}
-            className={`cursor-pointer flex flex-col gap-2 items-center md:w-[156px] w-[140px] 
-          flex-wrap md:py-8 py-5  border border-white/30 rounded-xl 
+            className={`cursor-pointer flex flex-col gap-2 items-center md:w-[156px] w-[120px] 
+          flex-wrap md:py-8 py-4    border border-white/30 rounded-xl 
           transition-all duration-300 transform hover:scale-105 ${selectMood === index ?  'bg-[#0F0F0F]':'bg-[#282828]'}`}
           >
             <div className="md:text-5xl text-4xl group-hover:scale-110 transition-transform duration-300">
