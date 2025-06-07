@@ -16,19 +16,22 @@ type MovieType = {
   vote_average: number;
 };
 
+
+
 interface HijoProps {
   randomMovie: MovieType | null;
   src: string;
   movies: MovieType[];
+  onCategorySelect: (value:number[])=>void
 }
 
-export default function Home({ randomMovie, src ,movies}: HijoProps) {
+export default function Home({ randomMovie, src ,movies,onCategorySelect}: HijoProps) {
   return (
     <div className="min-h-screen w-full bg-[#121212]" id="Home">
       <Navbar></Navbar>
       <Banner randomMovie={randomMovie} src={src} />
-      <CardMood></CardMood>
-      <CatalogueMovie movies={movies} />
+      <CardMood  onCategorySelect={onCategorySelect} />
+      <CatalogueMovie  movies={movies} />
       <Footer></Footer>
     </div>
   );

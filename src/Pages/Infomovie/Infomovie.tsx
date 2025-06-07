@@ -1,31 +1,31 @@
 import Navbar from "../../Components/Navbar";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Play, Star, Calendar, Bookmark, Heart, User } from "lucide-react";
 
-type MovieDetails = {
-  id: number;
-  title: string;
-  overview: string;
-  release_date: string;
-  runtime: number;
-  vote_average: number;
-  vote_count: number;
-  backdrop_path: string;
-  poster_path: string;
-  spoken_languages: {
-    english_name: string;
-    iso_639_1: string;
-    name: string;
-  }[];
-  budget: number;
-  revenue: number;
-  genres: {
-    id: number;
-    name: string;
-  }[];
-  homepage: string | null;
-  original_language: string;
-};
+// type MovieDetails = {
+//   id: number;
+//   title: string;
+//   overview: string;
+//   release_date: string;
+//   runtime: number;
+//   vote_average: number;
+//   vote_count: number;
+//   backdrop_path: string;
+//   poster_path: string;
+//   spoken_languages: {
+//     english_name: string;
+//     iso_639_1: string;
+//     name: string;
+//   }[];
+//   budget: number;
+//   revenue: number;
+//   genres: {
+//     id: number;
+//     name: string;
+//   }[];
+//   homepage: string | null;
+//   original_language: string;
+// };
 
 type MovieType = {
   id: number;
@@ -39,7 +39,7 @@ type MovieType = {
 
 type HijoProps = {
   randomMovie: MovieType | null;
-  movieDetails: MovieDetails | null;
+  // movieDetails: MovieDetails | null;
   src: string;
 };
 
@@ -49,12 +49,12 @@ type ViewUser = {
 
 export default function Infomovie({
   randomMovie,
-  movieDetails,
+  // movieDetails,
   src,
 }: HijoProps) {
-  useEffect(() => {
-    console.log(movieDetails);
-  }, [movieDetails]);
+  // useEffect(() => {
+  //   console.log(movieDetails);
+  // }, [movieDetails]);
 
   const [reviewUser, setReviewUser] = useState<ViewUser[]>([]);
   const [textInput, setTextInput] = useState("");
@@ -91,7 +91,7 @@ export default function Infomovie({
                 </p>
                 <p className=" mt-2 text-lg flex gap-1 items-center">
                   <Bookmark className="h-4 w-4 text-red-500" />
-                  {movieDetails?.genres[0]?.name}
+                  {/* {movieDetails?.genres[0]?.name} */}
                 </p>
               </div>
 
@@ -123,14 +123,14 @@ export default function Infomovie({
           <p className="text-lg text-[#D1D5DB] ">{randomMovie?.overview}</p>
 
           <h2 className="text-[#D1D5DB] mt-14">
-            Duración: {movieDetails?.runtime} min
+            {/* Duración: {movieDetails?.runtime} min */}
           </h2>
           <h2 className="text-[#D1D5DB] ">
-            Idioma original: {movieDetails?.spoken_languages[0]?.name} -{" "}
-            {movieDetails?.spoken_languages[1]?.name}
+            {/* Idioma original: {movieDetails?.spoken_languages[0]?.name} -{" "}
+            {movieDetails?.spoken_languages[1]?.name} */}
           </h2>
           <h2 className="text-[#D1D5DB] ">
-            Total de votos: {movieDetails?.vote_average.toFixed(1)}
+            {/* Total de votos: {movieDetails?.vote_average.toFixed(1)} */}
           </h2>
           {/* <h2 className="text-[#D1D5DB] mt-6    ">
             Presupuesto invertido: {movieDetails?.budget}

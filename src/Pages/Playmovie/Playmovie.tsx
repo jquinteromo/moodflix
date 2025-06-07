@@ -12,35 +12,35 @@ type MovieType = {
   vote_average: number;
 };
 
-type MovieDetails = {
-  id: number;
-  title: string;
-  overview: string;
-  release_date: string;
-  runtime: number;
-  vote_average: number;
-  vote_count: number;
-  backdrop_path: string;
-  poster_path: string;
-  genres: {
-    id: number;
-    name: string;
-  }[];
-  homepage: string | null;
-  original_language: string;
-};
+// type MovieDetails = {
+//   id: number;
+//   title: string;
+//   overview: string;
+//   release_date: string;
+//   runtime: number;
+//   vote_average: number;
+//   vote_count: number;
+//   backdrop_path: string;
+//   poster_path: string;
+//   genres: {
+//     id: number;
+//     name: string;
+//   }[];
+//   homepage: string | null;
+//   original_language: string;
+// };
 
 interface HijoProps {
   randomMovie: MovieType | null;
   src: string;
-  movieDetails: MovieDetails | null;
+  // movieDetails: MovieDetails | null;
   TrailerKey: string | null;
 }
 
 export default function Playmovie({
   randomMovie,
   src,
-  movieDetails,
+  // movieDetails,
   TrailerKey,
 }: HijoProps) {
   const DatarandomMovie = () => {
@@ -79,7 +79,7 @@ export default function Playmovie({
                 </p>
                 <p className=" mt-2 text-lg flex gap-1 items-center">
                   <Bookmark className="h-4 w-4 text-red-500" />
-                  {movieDetails?.genres[0]?.name}
+                  {/* {movieDetails?.genres[0]?.name} */}
                 </p>
               </div>
 

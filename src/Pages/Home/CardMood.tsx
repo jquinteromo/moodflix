@@ -1,37 +1,46 @@
 import { useState } from "react";
 
+interface HijoProps {
+  onCategorySelect: (value:number[]) => void;
+}
+
 const Moods = [
   {
     emolgi: "😂",
     label: "Feliz",
-    description: "Risa garantizada",
+    description: "Aumenta tu animo!",
+    categories: [35],
   },
   {
     emolgi: "😢",
     label: "Triste",
     description: "Conmueve profundo",
+   categories: [18, 10749],
   },
   {
     emolgi: "😡",
     label: "Enojado",
-    description: "Descarga emocional",
+    description: "Adrenalina?",
+     categories: [80, 53],
   },
   {
     emolgi: "😍",
     label: "Enamorado",
     description: "Romance puro",
+    categories: [10749, 18]
   },
   {
     emolgi: "😱",
     label: "Asombrado",
-    description: "Sorpresa total",
-    color : "#1E90FF"
+    description: "Quieres tención?",
+    color: "#1E90FF",
+    categories: [27, 53],
   },
 ];
 
-export default function CardMood() {
-  const [selectMood, setselectMood] = useState<number|null>(null);
-
+export default function CardMood({onCategorySelect}:HijoProps) {
+  const [selectMood, setselectMood] = useState<number | null>(null);
+  
 
   return (
     <div className="w-full flex items-center flex-col mt-6 gap-5 px-5 mb-11">
@@ -46,11 +55,14 @@ export default function CardMood() {
       <div className="w-full flex justify-center flex-row gap-7 flex-wrap">
         {Moods.map((mod, index) => (
           <div
-            onClick={()=>setselectMood(index)}
+            onClickCapture={() => onCategorySelect(mod.categories)}
+            onClick={() => setselectMood(index)}
             key={index}
             className={`cursor-pointer flex flex-col gap-2 items-center md:w-[156px] w-[120px] 
           flex-wrap md:py-8 py-4    border border-white/30 rounded-xl 
-          transition-all duration-300 transform hover:scale-105 ${selectMood === index ?  'bg-[#0F0F0F]':'bg-[#282828]'}`}
+          transition-all duration-300 transform hover:scale-105 ${
+            selectMood === index ? "bg-[#0F0F0F]" : "bg-[#282828]"
+          }`}
           >
             <div className="md:text-5xl text-4xl group-hover:scale-110 transition-transform duration-300">
               {mod.emolgi}
@@ -58,7 +70,9 @@ export default function CardMood() {
             <h1 className="md:text-xl text-lg font-semibold text-[#D1D5DB]">
               {mod.label}
             </h1>
-            <h1 className="md:text-sm text-xs text-[#D1D5DB]">{mod.description}</h1>
+            <h1 className="md:text-sm text-xs text-[#D1D5DB]">
+              {mod.description}
+            </h1>
           </div>
         ))}
       </div>
