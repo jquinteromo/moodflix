@@ -1,4 +1,5 @@
 import Navbar from "../../Components/Navbar";
+import { useEffect } from "react";
 import { Play, Star, Calendar, Bookmark, Heart } from "lucide-react";
 
 type MovieDetails = {
@@ -11,6 +12,13 @@ type MovieDetails = {
   vote_count: number;
   backdrop_path: string;
   poster_path: string;
+  spoken_languages: {
+    english_name: string;
+    iso_639_1: string;
+    name: string;
+  }[];
+  budget: number;
+  revenue: number;
   genres: {
     id: number;
     name: string;
@@ -35,7 +43,14 @@ type HijoProps = {
   src: string;
 };
 
-export default function Infomovie({ randomMovie,movieDetails, src }: HijoProps) {
+export default function Infomovie({
+  randomMovie,
+  movieDetails,
+  src,
+}: HijoProps) {
+  useEffect(() => {
+    console.log(movieDetails);
+  }, [movieDetails]);
   return (
     <div>
       <Navbar variant="Playmovie"></Navbar>
@@ -92,6 +107,29 @@ export default function Infomovie({ randomMovie,movieDetails, src }: HijoProps) 
               </div>
             </div>
           </div>
+        </div>
+        <div className="w-full px-14 flex flex-col mt-10 mb-20">
+          <h1 className="text-2xl font-bold text-[#D1A23F] mb-5">
+            Descripción
+          </h1>
+          <p className="text-lg text-[#D1D5DB] ">{randomMovie?.overview}</p>
+
+          <h2 className="text-[#D1D5DB] mt-14">
+            Duración: {movieDetails?.runtime} min
+          </h2>
+          <h2 className="text-[#D1D5DB] ">
+            Idioma original: {movieDetails?.spoken_languages[0]?.name} -{" "}
+            {movieDetails?.spoken_languages[1]?.name}
+          </h2>
+          <h2 className="text-[#D1D5DB] ">
+            Total de votos: {movieDetails?.vote_average.toFixed(1)}
+          </h2>
+          <h2 className="text-[#D1D5DB] mt-6    ">
+            Presupuesto invertido: {movieDetails?.budget}
+          </h2>
+          <h2 className="text-[#D1D5DB] ">
+            Presupuesto Recaudado: {movieDetails?.revenue}
+          </h2>
         </div>
       </div>
     </div>

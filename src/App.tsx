@@ -32,6 +32,13 @@ type MovieDetails = {
   vote_count: number;
   backdrop_path: string;
   poster_path: string;
+  spoken_languages: {
+    english_name: string;
+    iso_639_1: string;
+    name: string;
+  }[];
+  budget: number;
+  revenue: number;
   genres: {
     id: number;
     name: string;
@@ -52,7 +59,7 @@ function App() {
   const [TrailerKey, setTrailerKey] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch(`${BASE_URL}/movie/popular?api_key=${API_KEY}&language=es-ES&page=39
+    fetch(`${BASE_URL}/movie/popular?api_key=${API_KEY}&language=es-ES&page=49
     `)
       .then((res) => res.json())
       .then((data) => {
@@ -123,7 +130,16 @@ function App() {
           />
         }
       />
-      <Route path="/Infomovie" element={<Infomovie randomMovie={randomMovie}  movieDetails={movieDetails} src={src}/>} />
+      <Route
+        path="/Infomovie"
+        element={
+          <Infomovie
+            randomMovie={randomMovie}
+            movieDetails={movieDetails}
+            src={src}
+          />
+        }
+      />
     </Routes>
   );
 }
