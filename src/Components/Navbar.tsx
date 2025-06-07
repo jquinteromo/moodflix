@@ -49,7 +49,7 @@ export default function Navbar({ variant }: NavbarProps) {
       <div className=" inline-flex gap-4 md:ml-20">
         <div className="relative">
           <input
-            type="text"
+            type="search"
             placeholder="Search movies..."
             className="w-12 md:placeholder:opacity-100 placeholder:opacity-0 md:w-56  px-2 md:px-9 py-2  bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:border-blue-500 focus:bg-white/15 transition-all"
           />

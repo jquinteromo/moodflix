@@ -1,6 +1,6 @@
 import Navbar from "../../Components/Navbar";
-import { useEffect } from "react";
-import { Play, Star, Calendar, Bookmark, Heart } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Play, Star, Calendar, Bookmark, Heart, User } from "lucide-react";
 
 type MovieDetails = {
   id: number;
@@ -43,6 +43,10 @@ type HijoProps = {
   src: string;
 };
 
+type ViewUser = {
+  reviwUser: string;
+};
+
 export default function Infomovie({
   randomMovie,
   movieDetails,
@@ -51,6 +55,10 @@ export default function Infomovie({
   useEffect(() => {
     console.log(movieDetails);
   }, [movieDetails]);
+
+  const [reviewUser, setReviewUser] = useState<ViewUser[]>([]);
+  const [textInput, setTextInput] = useState("");
+
   return (
     <div>
       <Navbar variant="Playmovie"></Navbar>
@@ -124,12 +132,53 @@ export default function Infomovie({
           <h2 className="text-[#D1D5DB] ">
             Total de votos: {movieDetails?.vote_average.toFixed(1)}
           </h2>
-          <h2 className="text-[#D1D5DB] mt-6    ">
+          {/* <h2 className="text-[#D1D5DB] mt-6    ">
             Presupuesto invertido: {movieDetails?.budget}
           </h2>
           <h2 className="text-[#D1D5DB] ">
             Presupuesto Recaudado: {movieDetails?.revenue}
-          </h2>
+          </h2> */}
+
+          <div className="w-[60rem] h-[23rem] bg-white/10 mt-16 rounded-lg p-5">
+            <h1 className="text-white text-xl font-semibold">
+              Escribe tu reseña
+            </h1>
+            <h1 className="text-[#D1D5DB] text-sm font-semibold mt-9">
+              Comentario
+            </h1>
+            <textarea
+              onChange={(e) => setTextInput(e.target.value)}
+              placeholder="¿Qué te pareció esta película?"
+              className="w-full h-36 rounded-lg text-white bg-white/10 border border-white/50 my-2 p-3"
+            ></textarea>
+            <input
+              value={"Publicar Reseña"}
+              className="text-white cursor-pointer hover:opacity-75 font-semibold rounded-lg px-7 py-2 my-4 bg-white/20"
+              type="button"
+              onClick={() => {
+                if (textInput.trim() !== "") {
+                  setReviewUser([...reviewUser, { reviwUser: textInput }]);
+                  setTextInput(""); 
+                }
+              }}
+            ></input>
+          </div>
+
+          {reviewUser.map((item, index) => (
+            <div
+              key={index}
+              className="w-[60rem]  my-6 p-8 rounded-lg bg-white/10"
+            >
+              <div className="w-full flex gap-4">
+                <div className="w-10 h-10  rounded-full bg-white/30 flex justify-center items-center">
+                  <User className="text-white w-5"></User>
+                </div>
+                <h1 className="text-white font-semibold">Usuario Moodflix</h1>
+                <h1 className="text-white/60 text-sm ml-6 mt-0.5">Hace 30 sec</h1>
+              </div>
+              <span className="text-white/85 mt-4 ml-14">{item.reviwUser}</span>
+            </div>
+          ))}
         </div>
       </div>
     </div>
