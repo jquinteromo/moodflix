@@ -35,7 +35,7 @@ export default function CardMood() {
 
   return (
     <div className="w-full flex items-center flex-col mt-6 gap-5 px-5 mb-11">
-      <h1 className="text-[#D1D5DB] text-center font-bold  text-3xl md:text-4xl">
+      <h1 className="text-[#D1A23F] text-center font-bold  text-3xl md:text-4xl">
         ¿Cómo te sientes hoy?
       </h1>
       <h2 className="text-[#D1D5DB] text-center text-sm md:text-base">

@@ -59,11 +59,11 @@ export default function Navbar({ variant }: NavbarProps) {
           <input
             onClick={goToMyList}
             type="button"
-            className="w-12 px-4 py-2  bg-white/10 border border-white/20 rounded-lg text-white  focus:outline-none cursor-pointer transition-all"
+            className="bg-[#D1A23F] w-12 px-4 py-2  bg-white/10 border border-white/20 rounded-lg text-white  focus:outline-none cursor-pointer transition-all"
           />
           <Heart
             onClick={goToMyList}
-            className="cursor-pointer absolute left-[0.872rem] top-1/2 transform -translate-y-1/2 w-5 h-5 text-white/50"
+            className=" cursor-pointer absolute left-[0.872rem] top-1/2 transform -translate-y-1/2 w-5 h-5 text-white/50"
           />
         </div>
       </div>

@@ -24,6 +24,10 @@ export default function Banner({ randomMovie, src }: HijoProps) {
     navigate("/Playmovie");
   };
 
+  const goToInfomovie = () => {
+    navigate("/Infomovie");
+  };
+
   if (!randomMovie) return null;
   return (
     <div>
@@ -59,6 +63,7 @@ export default function Banner({ randomMovie, src }: HijoProps) {
               </div>
               <div className="relative">
                 <input
+                  onClick={goToInfomovie}
                   type="button"
                   value={"Mas información"}
                   className="md:text-base text-xs pl-6 font-bold py-3 md:px-10 px-3 bg-white/10 border  rounded-md cursor-pointer hover:opacity-70"

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Mylist from "./Pages/Mylist/Mylist";
 import Home from "./Pages/Home/Home";
 import Playmovie from "./Pages/Playmovie/Playmovie";
+import Infomovie from "./Pages/Infomovie/Infomovie";
 
 type MovieType = {
   id: number;
@@ -122,6 +123,7 @@ function App() {
           />
         }
       />
+      <Route path="/Infomovie" element={<Infomovie  movieDetails={movieDetails}/>} />
     </Routes>
   );
 }

@@ -107,7 +107,7 @@ export default function Playmovie({
         </div>
 
         <div className="w-full px-14 flex flex-col mt-10 mb-10">
-          <h1 className="text-2xl font-bold text-[#D1D5DB] mb-5"> Descripción</h1>
+          <h1 className="text-2xl font-bold text-[#D1A23F] mb-5"> Descripción</h1>
           <p className="text-lg text-[#D1D5DB] ">{randomMovie?.overview}</p>
 
           {TrailerKey ? (
