@@ -123,7 +123,7 @@ function App() {
           />
         }
       />
-      <Route path="/Infomovie" element={<Infomovie  movieDetails={movieDetails}/>} />
+      <Route path="/Infomovie" element={<Infomovie randomMovie={randomMovie}  movieDetails={movieDetails} src={src}/>} />
     </Routes>
   );
 }
