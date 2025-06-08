@@ -2,7 +2,7 @@ import { Mail, Youtube } from "lucide-react";
 
 const Footer = () => {
   return (
-    <footer className="w-full mt-20 bg-[#111] text-gray-400 px-6 py-10 border-t border-gray-800">
+    <footer className="w-full mt-20 bg-[#111] text-gray-400 px-6 py-10  border-gray-800">
       <div className="max-w-screen-lg mx-auto flex flex-col md:flex-row justify-between items-center gap-4 text-sm">
         <p className="text-center md:text-left">
           Datos proporcionados por{" "}

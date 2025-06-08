@@ -13,9 +13,10 @@ type MovieType = {
 
 interface HijoProps {
   movies: MovieType[];
+  emolgiSelect: string 
 }
 
-export default function CatalogueMovie({ movies }: HijoProps) {
+export default function CatalogueMovie({ movies, emolgiSelect }: HijoProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const scrollLeft = () => {
@@ -25,9 +26,32 @@ export default function CatalogueMovie({ movies }: HijoProps) {
   const scrollRight = () => {
     scrollRef.current?.scrollBy({ left: 300, behavior: "smooth" });
   };
+
+  const currentMoodStyle =
+    emolgiSelect === "😂"
+      ? " via-yellow-500"
+      : emolgiSelect === "😢"
+      ? " via-blue-500"
+      : emolgiSelect === "😡"
+      ? "via-red-500"
+      : emolgiSelect === "😍"
+      ? "via-[#7B1E3B]"
+      : emolgiSelect === "😱"
+      ? "via-[#3A5F0B]"
+      : "";
+
   return (
-    <div className="flex flex-col gap-16 mb-10">
-      <div className="relative">
+    <div className="flex flex-col gap-16 mb-10 mt-10 ">
+      <div
+        className={`relative  z-30 w-full transition-all duration-700 `}
+      >
+        <div className={`absolute inset-0 bg-gradient-to-b from-[#121212]/80 ${currentMoodStyle} to-[#121212]/80  backdrop-blur-md pointer-events-none z-0`} />
+
+        {emolgiSelect && (
+          <h1 className={`text-white text-2xl font-bold px-5 py-2 rounded-xl bg-gradient-to-r  bg-white/5  backdrop-blur-sm border border-white/10 shadow-md w-fit ml-6 mb-4`}>
+            Mood {emolgiSelect}
+          </h1>
+        )}
         <div
           ref={scrollRef}
           className=" w-full flex flex-row gap-5 px-6 overflow-x-auto scroll-smooth whitespace-nowrap select-none"
@@ -45,14 +69,12 @@ export default function CatalogueMovie({ movies }: HijoProps) {
           >
             <ChevronRight className={`w-6 h-6 text-white`} />
           </button>
+
           {movies.map((movie, index) => (
             <div
               key={index}
-              className="flex-shrink-0 md:w-56 w-[150px] flex flex-col gap-4 relative"
+              className="flex-shrink-0 md:w-56 w-[150px] flex flex-col gap-4 relative "
             >
-              <h1 className="text-[#D1D5DB] md:text-2xl text-xl font-bold mb-3">
-                Mood 😂
-              </h1>
               <div className="md:h-72 h-52 md:w-48 w-36  relative group">
                 <img
                   src={`https://image.tmdb.org/t/p/w780${movie.poster_path}`}
@@ -76,7 +98,7 @@ export default function CatalogueMovie({ movies }: HijoProps) {
                 <h1 className="text-[#D1D5DB] md:text-base text-xs font-bold mb-1 break-words whitespace-normal">
                   {movie.title}
                 </h1>
-                <h2 className="md:text-base text-sm text-[#D1D5DB] ">2022</h2>
+                <h2 className="md:text-base text-sm text-[#D1D5DB] ">{movie.release_date.slice(0,4)}</h2>
               </div>
             </div>
           ))}

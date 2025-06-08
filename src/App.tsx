@@ -57,14 +57,18 @@ function App() {
   const [randomMovie, setRandomMovie] = useState<MovieType | null>(null);
   const [src, setSrc] = useState<string>("");
   const [movies, setmovies] = useState<MovieType[]>([]);
-  const [SelectedCategory, setSelectedCategory] = useState<number[] | null>(
-    null
-  );
+  const [SelectedCategory, setSelectedCategory] = useState<{
+    emolgi: string 
+    categories: number[];
+  } | null>(null);
 
   const [TrailerKey, setTrailerKey] = useState<string | null>(null);
 
-  const handleCategoryFromChild = (category: number[]) => {
-    setSelectedCategory(category);
+  const handleCategoryFromChild = (emolgi: string, category: number[]) => {
+    setSelectedCategory({
+      emolgi,
+      categories: category,
+    });
   };
 
   // useEffect(() => {
@@ -106,60 +110,58 @@ function App() {
       });
   }, [randomMovie]);
 
-
   //filtro de peliculas
- useEffect(() => {
-  if (!SelectedCategory || SelectedCategory.length === 0) return;
+  useEffect(() => {
+    if (!SelectedCategory || SelectedCategory.categories.length === 0) return;
 
-  const fetchMovies = async () => {
-    const pelisNecesarias = 10;
-    const maxIntentos = 3;
-    const peticionesPorIntento = 5;
-    const acumuladas: MovieType[] = [];
+    const fetchMovies = async () => {
+      const pelisNecesarias = 10;
+      const maxIntentos = 3;
+      const peticionesPorIntento = 5;
+      const acumuladas: MovieType[] = [];
 
-    let intento = 0;
+      let intento = 0;
 
-    while (acumuladas.length < pelisNecesarias && intento < maxIntentos) {
-      intento++;
-      const paginas = Array.from({ length: peticionesPorIntento }, () =>
-        Math.floor(Math.random() * 500) + 1
-      );
-
-      try {
-        const respuestas = await Promise.all(
-          paginas.map((page) =>
-            fetch(
-              `${BASE_URL}/discover/movie?api_key=${API_KEY}&language=es-ES&with_genres=${SelectedCategory.join(
-                ","
-              )}&page=${page}`
-            ).then((res) => res.json())
-          )
+      while (acumuladas.length < pelisNecesarias && intento < maxIntentos) {
+        intento++;
+        const paginas = Array.from(
+          { length: peticionesPorIntento },
+          () => Math.floor(Math.random() * 500) + 1
         );
 
-        for (const data of respuestas) {
-          const filtradas = (data.results || []).filter(
-            (movie: MovieType) =>
-              new Date(movie.release_date) >= new Date("2000-01-01") &&
-              movie.vote_count > 800
+        try {
+          const respuestas = await Promise.all(
+            paginas.map((page) =>
+              fetch(
+                `${BASE_URL}/discover/movie?api_key=${API_KEY}&language=es-ES&with_genres=${SelectedCategory.categories.join(
+                  ","
+                )}&page=${page}`
+              ).then((res) => res.json())
+            )
           );
 
-          acumuladas.push(...filtradas);
+          for (const data of respuestas) {
+            const filtradas = (data.results || []).filter(
+              (movie: MovieType) =>
+                new Date(movie.release_date) >= new Date("2000-01-01") &&
+                movie.vote_count > 800
+            );
 
-          if (acumuladas.length >= pelisNecesarias) break;
+            acumuladas.push(...filtradas);
+
+            if (acumuladas.length >= pelisNecesarias) break;
+          }
+        } catch (err) {
+          console.error("Error en intento", intento, err);
         }
-      } catch (err) {
-        console.error("Error en intento", intento, err);
       }
-    }
 
-    const mezcladas = acumuladas.sort(() => Math.random() - 0.5);
-    setmovies(mezcladas.slice(0, pelisNecesarias));
-  };
+      const mezcladas = acumuladas.sort(() => Math.random() - 0.5);
+      setmovies(mezcladas.slice(0, pelisNecesarias));
+    };
 
-  fetchMovies();
-}, [SelectedCategory]);
-
-
+    fetchMovies();
+  }, [SelectedCategory]);
 
   useEffect(() => {
     console.log(movies);
@@ -186,6 +188,7 @@ function App() {
         path="/"
         element={
           <Home
+            emolgiSelect={SelectedCategory?.emolgi ?? ""}
             onCategorySelect={handleCategoryFromChild}
             randomMovie={randomMovie}
             src={src}

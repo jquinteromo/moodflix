@@ -22,16 +22,17 @@ interface HijoProps {
   randomMovie: MovieType | null;
   src: string;
   movies: MovieType[];
-  onCategorySelect: (value:number[])=>void
+  onCategorySelect: (emolgi:string,categories:number[])=>void
+  emolgiSelect:string 
 }
 
-export default function Home({ randomMovie, src ,movies,onCategorySelect}: HijoProps) {
+export default function Home({ randomMovie, src ,movies,onCategorySelect,emolgiSelect}: HijoProps) {
   return (
     <div className="min-h-screen w-full bg-[#121212]" id="Home">
       <Navbar></Navbar>
       <Banner randomMovie={randomMovie} src={src} />
       <CardMood  onCategorySelect={onCategorySelect} />
-      <CatalogueMovie  movies={movies} />
+      <CatalogueMovie  emolgiSelect={emolgiSelect} movies={movies}  />
       <Footer></Footer>
     </div>
   );
