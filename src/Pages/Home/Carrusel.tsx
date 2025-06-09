@@ -18,7 +18,7 @@ interface HijoProps {
   title:string
 }
 
-export default function Carrusel({ movies, emolgiSelect,title }: HijoProps) {
+export default function Carrusel({ movies, title }: HijoProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const scrollLeft = () => {
@@ -29,18 +29,7 @@ export default function Carrusel({ movies, emolgiSelect,title }: HijoProps) {
     scrollRef.current?.scrollBy({ left: 300, behavior: "smooth" });
   };
 
-  const currentMoodStyle =
-    title === "🔥 Populares"
-      ? ""
-      : emolgiSelect === "😢"
-      ? " via-blue-500"
-      : emolgiSelect === "😡"
-      ? "via-red-500"
-      : emolgiSelect === "😍"
-      ? "via-[#7B1E3B]"
-      : emolgiSelect === "😱"
-      ? "via-[#3A5F0B]"
-      : "";
+ 
 
   return (
     <div className="flex flex-col gap-16 mb-10 mt-20 ">
