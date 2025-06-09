@@ -11,13 +11,13 @@ type MovieType = {
 };
 
 interface HijoProps {
-  randomMovie: MovieType | null;
+  weekmovies: MovieType | null;
   src: string;
 }
 
 import { Info, Play } from "lucide-react";
 
-export default function Banner({ randomMovie, src }: HijoProps) {
+export default function Banner({ weekmovies, src }: HijoProps) {
   const navigate = useNavigate();
 
   const goToPlaymovie = () => {
@@ -28,7 +28,7 @@ export default function Banner({ randomMovie, src }: HijoProps) {
     navigate("/Infomovie");
   };
 
-  if (!randomMovie) return null;
+  if (!weekmovies) return null;
   return (
     <div>
       <div className="mt-16 relative w-full h-[50vh] md:h-[70vh] bg-white aspect-video overflow-hidden">
@@ -46,10 +46,10 @@ export default function Banner({ randomMovie, src }: HijoProps) {
         <div className="absolute inset-0 flex   justify-center flex-col px-8">
           <div className="flex flex-col gap-6 text-white max-w-xl ml-5">
             <h1 className="text-4xl md:text-6xl font-bold">
-              {randomMovie.title}
+              {weekmovies.title}
             </h1>
             <p className=" mt-2 text-lg">
-              {randomMovie.overview.slice(0, 200)}...
+              {weekmovies.overview.slice(0, 200)}...
             </p>
             <div className=" flex gap-5 ">
               <div className="relative">
