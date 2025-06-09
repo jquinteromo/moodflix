@@ -1,7 +1,7 @@
 import Navbar from "../../Components/Navbar";
 import Banner from "./Banner";
 import CardMood from "./CardMood";
-import CatalogueMovie from "./CatalogueMovies";
+import CatalogueMovie from "./MoodCarrusel";
 import Footer from "./Footer";
 
 
@@ -19,20 +19,20 @@ type MovieType = {
 
 
 interface HijoProps {
-  randomMovie: MovieType | null;
+  weekmovies: MovieType | null;
   src: string;
   movies: MovieType[];
   onCategorySelect: (emolgi:string,categories:number[])=>void
   emolgiSelect:string 
 }
 
-export default function Home({ randomMovie, src ,movies,onCategorySelect,emolgiSelect}: HijoProps) {
+export default function Home({ weekmovies, src ,movies,onCategorySelect,emolgiSelect}: HijoProps) {
   return (
     <div className="min-h-screen w-full bg-[#121212]" id="Home">
       <Navbar></Navbar>
-      <Banner randomMovie={randomMovie} src={src} />
+      <Banner weekmovies={weekmovies} src={src} />
       <CardMood  onCategorySelect={onCategorySelect} />
-      <CatalogueMovie  emolgiSelect={emolgiSelect} movies={movies}  />
+      <CatalogueMovie  src={src} emolgiSelect={emolgiSelect} movies={movies}  />
       <Footer></Footer>
     </div>
   );

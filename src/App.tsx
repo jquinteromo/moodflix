@@ -57,6 +57,7 @@ function App() {
   const [randomMovie, setRandomMovie] = useState<MovieType | null>(null);
   const [src, setSrc] = useState<string>("");
   const [movies, setmovies] = useState<MovieType[]>([]);
+  const [weekmovies, setweekmovies] = useState<MovieType|null>(null)
   const [SelectedCategory, setSelectedCategory] = useState<{
     emolgi: string 
     categories: number[];
@@ -71,21 +72,25 @@ function App() {
     });
   };
 
-  // useEffect(() => {
-  //   fetch(`${BASE_URL}/movie/popular?api_key=${API_KEY}&language=es-ES&page=59
-  //   `)
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       setMoviess(data.results);
+  //Filtrado peliculas de la semana 
+  
+  useEffect(() => {
+    fetch(`${BASE_URL}/trending/movie/week?api_key=${API_KEY}&language=es-ES`)
+      .then((res) => res.json())
+      .then((data) => {
+        const filteredMovies = data.results.filter(
+          (m: MovieType) => m.backdrop_path && m.overview
+        );
+        const random =
+          filteredMovies[Math.floor(Math.random() * filteredMovies.length)];
+       setweekmovies(random);
+      });
+  }, []);
 
-  //       const filteredMovies = data.results.filter(
-  //         (m: MovieType) => m.backdrop_path && m.overview
-  //       );
-  //       const random =
-  //         filteredMovies[Math.floor(Math.random() * filteredMovies.length)];
-  //       setRandomMovie(random);
-  //     });
-  // }, []);
+
+
+
+
 
   useEffect(() => {
     if (!randomMovie) return;
@@ -97,6 +102,7 @@ function App() {
         setmovies(data);
       });
 
+      
     fetch(
       `${BASE_URL}/movie/${randomMovie.id}/videos?api_key=${API_KEY}&language=es-ES`
     )
@@ -109,6 +115,10 @@ function App() {
         setTrailerKey(trailer?.key || null);
       });
   }, [randomMovie]);
+
+
+  
+
 
   //filtro de peliculas
   useEffect(() => {
@@ -163,15 +173,12 @@ function App() {
     fetchMovies();
   }, [SelectedCategory]);
 
-  useEffect(() => {
-    console.log(movies);
-  }, [movies]);
 
   useEffect(() => {
-    if (!randomMovie) return;
+    if (!weekmovies) return;
 
-    const low = `https://image.tmdb.org/t/p/w300${randomMovie.backdrop_path}`;
-    const highRes = `https://image.tmdb.org/t/p/original${randomMovie.backdrop_path}`;
+    const low = `https://image.tmdb.org/t/p/w300${weekmovies.backdrop_path}`;
+    const highRes = `https://image.tmdb.org/t/p/original${weekmovies.backdrop_path}`;
     setSrc(low);
     const img = new Image();
     img.src = highRes;
@@ -180,7 +187,7 @@ function App() {
     return () => {
       img.onload = null;
     };
-  }, [randomMovie]);
+  }, [weekmovies]);
 
   return (
     <Routes>
@@ -190,7 +197,7 @@ function App() {
           <Home
             emolgiSelect={SelectedCategory?.emolgi ?? ""}
             onCategorySelect={handleCategoryFromChild}
-            randomMovie={randomMovie}
+            weekmovies={weekmovies}
             src={src}
             movies={movies}
           />
