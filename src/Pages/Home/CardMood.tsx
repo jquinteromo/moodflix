@@ -2,6 +2,7 @@ import { useState } from "react";
 
 interface HijoProps {
   onCategorySelect: (emolgi: string, categories: number[]) => void;
+  
 }
 
 const Moods = [

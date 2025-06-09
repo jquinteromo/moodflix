@@ -53,18 +53,17 @@ const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 const BASE_URL = "https://api.themoviedb.org/3";
 
 function App() {
-
   //Pelis Carrusel
   const [PopularMovies, setPopularMovies] = useState<MovieType[]>([]);
   const [NowPlayingMovies, setNowPlayingMovies] = useState<MovieType[]>([]);
   const [TopRatedMovies, setTopRatedMovies] = useState<MovieType[]>([]);
-
 
   // const [moviess, setMoviess] = useState<MovieType[]>([]);
   const [randomMovie, setRandomMovie] = useState<MovieType | null>(null);
   const [src, setSrc] = useState<string>("");
   const [movies, setmovies] = useState<MovieType[]>([]);
   const [weekmovies, setweekmovies] = useState<MovieType | null>(null);
+  const [movieFavorite, setmovieFavorite] = useState<MovieType[]>([]);
   const [SelectedCategory, setSelectedCategory] = useState<{
     emolgi: string;
     categories: number[];
@@ -78,6 +77,16 @@ function App() {
       categories: category,
     });
   };
+
+  const moviefavorite = (Movie: MovieType) => {
+    setmovieFavorite((prev) =>
+      prev.find((fav) => fav.id === Movie.id) ? prev : [Movie, ...prev ]
+    );
+  };
+
+    useEffect(() => {
+    console.log(movieFavorite)
+  }, [movieFavorite]);
 
   //Filtrado peliculas de la semana
   useEffect(() => {
@@ -95,33 +104,36 @@ function App() {
 
   //Top Carrusel section
   useEffect(() => {
-     const fetchAllCategories = async () => {
-    try {
-      const [popularRes, nowPlayingRes, topRatedRes] = await Promise.all([
-        fetch(`${BASE_URL}/movie/popular?api_key=${API_KEY}&language=es-ES&page=1`),
-        fetch(`${BASE_URL}/movie/now_playing?api_key=${API_KEY}&language=es-ES&page=1&region=ES`),
-        fetch(`${BASE_URL}/movie/top_rated?api_key=${API_KEY}&language=es-ES&page=1`)
-      ]);
+    const fetchAllCategories = async () => {
+      try {
+        const [popularRes, nowPlayingRes, topRatedRes] = await Promise.all([
+          fetch(
+            `${BASE_URL}/movie/popular?api_key=${API_KEY}&language=es-ES&page=1`
+          ),
+          fetch(
+            `${BASE_URL}/movie/now_playing?api_key=${API_KEY}&language=es-ES&page=1&region=ES`
+          ),
+          fetch(
+            `${BASE_URL}/movie/top_rated?api_key=${API_KEY}&language=es-ES&page=1`
+          ),
+        ]);
 
-      const [popularData, nowPlayingData, topRatedData] = await Promise.all([
-        popularRes.json(),
-        nowPlayingRes.json(),
-        topRatedRes.json()
-      ]);
+        const [popularData, nowPlayingData, topRatedData] = await Promise.all([
+          popularRes.json(),
+          nowPlayingRes.json(),
+          topRatedRes.json(),
+        ]);
 
-      setPopularMovies(popularData.results);
-      setNowPlayingMovies(nowPlayingData.results);
-      setTopRatedMovies(topRatedData.results);
+        setPopularMovies(popularData.results);
+        setNowPlayingMovies(nowPlayingData.results);
+        setTopRatedMovies(topRatedData.results);
+      } catch (err) {
+        console.error("Error fetching movie categories:", err);
+      }
+    };
 
-    } catch (err) {
-      console.error("Error fetching movie categories:", err);
-    }
-  };
-
-  fetchAllCategories();
+    fetchAllCategories();
   }, []);
-
-
 
   useEffect(() => {
     if (!randomMovie) return;
@@ -228,10 +240,11 @@ function App() {
             PopularMovies={PopularMovies}
             NowPlayingMovies={NowPlayingMovies}
             TopRatedMovies={TopRatedMovies}
+            moviefavorite={moviefavorite}
           />
         }
       />
-      <Route path="/Mylist" element={<Mylist movies={movies} />} />
+      <Route path="/Mylist"  element={<Mylist  movieFavorite={movieFavorite}/>} />
       <Route
         path="/Playmovie"
         element={

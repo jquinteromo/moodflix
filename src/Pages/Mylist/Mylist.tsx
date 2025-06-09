@@ -1,8 +1,7 @@
-import {   Play, Plus } from "lucide-react";
-
+import { Play} from "lucide-react";
 
 import Navbar from "../../Components/Navbar";
- type MovieType = {
+type MovieType = {
   id: number;
   title: string;
   overview: string;
@@ -13,25 +12,25 @@ import Navbar from "../../Components/Navbar";
 };
 
 interface HijoProps {
-  movies: MovieType[];
+  movieFavorite: MovieType[];
 }
-export default function Mylist({ movies }: HijoProps) {
+export default function Mylist({ movieFavorite }: HijoProps) {
   return (
-    <div>
+    <div className=" flex flex-col ml-4">
       <Navbar></Navbar>
-      <div className="w-full flex mt-44 justify-center md:ml-3">
-        <div
-          className=" grid md:grid-cols-5 grid-cols-2 gap-5 px-6   select-none"
-        >
-    
-          {movies.map((movie, index) => (
+        <h1 className={`text-white text-2xl font-bold px-2 py-2 rounded-xl bg-gradient-to-r  bg-white/5  backdrop-blur-sm border border-white/10 shadow-md w-fit  mb-4 mt-36`}>
+        🍿 Mi Lista
+          </h1>
+
+      <div className="w-full flex  items-center">
+        
+       
+        <div className=" grid md:grid-cols-6 grid-cols-2  select-none">
+          {movieFavorite.map((movie, index) => (
             <div
               key={index}
               className="flex-shrink-0 md:w-56 w-[150px] flex flex-col gap-4 relative"
             >
-              <h1 className="text-[#D1D5DB] md:text-2xl text-xl font-bold mb-3">
-                My List
-              </h1>
               <div className="md:h-72 h-52 md:w-48 w-36  relative group">
                 <img
                   src={`https://image.tmdb.org/t/p/w780${movie.poster_path}`}
@@ -43,12 +42,7 @@ export default function Mylist({ movies }: HijoProps) {
                   <Play className={`w-6 h-6 text-white`} />
                 </button>
 
-                <button
-                  className={`absolute  top-2 right-2 group-hover:opacity-100 opacity-0 bg-black/70  hover:bg-black/90 w-8 h-8 rounded-full flex items-center justify-center transition-colors text-white hover:bg-black/90"
-              `}
-                >
-                  <Plus className="w-4 h-4" />
-                </button>
+                
               </div>
 
               <div className=" md:w-52 w-40 flex flex-col">

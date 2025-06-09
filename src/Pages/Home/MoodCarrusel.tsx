@@ -9,15 +9,19 @@ type MovieType = {
   poster_path: string;
   release_date: string;
   vote_average: number;
+  genre_ids: number[];
+  vote_count: number;
 };
+
 
 interface HijoProps {
   movies: MovieType[];
   emolgiSelect: string 
   src:string
+  moviefavorite: (Movie:MovieType) =>void
 }
 
-export default function CatalogueMovie({ movies, emolgiSelect }: HijoProps) {
+export default function CatalogueMovie({ movies, emolgiSelect ,moviefavorite}: HijoProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const scrollLeft = () => {
@@ -88,6 +92,7 @@ export default function CatalogueMovie({ movies, emolgiSelect }: HijoProps) {
                 </button>
 
                 <button
+                onClick={()=>moviefavorite(movie)}
                   className={`absolute  top-2 right-2 group-hover:opacity-100 opacity-0 bg-black/70  hover:bg-black/90 w-8 h-8 rounded-full flex items-center justify-center transition-colors text-white hover:bg-black/90"
               `}
                 >
