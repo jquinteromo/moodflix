@@ -53,13 +53,20 @@ const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 const BASE_URL = "https://api.themoviedb.org/3";
 
 function App() {
+
+  //Pelis Carrusel
+  const [PopularMovies, setPopularMovies] = useState<MovieType[]>([]);
+  const [NowPlayingMovies, setNowPlayingMovies] = useState<MovieType[]>([]);
+  const [TopRatedMovies, setTopRatedMovies] = useState<MovieType[]>([]);
+
+
   // const [moviess, setMoviess] = useState<MovieType[]>([]);
   const [randomMovie, setRandomMovie] = useState<MovieType | null>(null);
   const [src, setSrc] = useState<string>("");
   const [movies, setmovies] = useState<MovieType[]>([]);
-  const [weekmovies, setweekmovies] = useState<MovieType|null>(null)
+  const [weekmovies, setweekmovies] = useState<MovieType | null>(null);
   const [SelectedCategory, setSelectedCategory] = useState<{
-    emolgi: string 
+    emolgi: string;
     categories: number[];
   } | null>(null);
 
@@ -72,8 +79,7 @@ function App() {
     });
   };
 
-  //Filtrado peliculas de la semana 
-  
+  //Filtrado peliculas de la semana
   useEffect(() => {
     fetch(`${BASE_URL}/trending/movie/week?api_key=${API_KEY}&language=es-ES`)
       .then((res) => res.json())
@@ -83,12 +89,37 @@ function App() {
         );
         const random =
           filteredMovies[Math.floor(Math.random() * filteredMovies.length)];
-       setweekmovies(random);
+        setweekmovies(random);
       });
   }, []);
 
+  //Top Carrusel section
+  useEffect(() => {
+     const fetchAllCategories = async () => {
+    try {
+      const [popularRes, nowPlayingRes, topRatedRes] = await Promise.all([
+        fetch(`${BASE_URL}/movie/popular?api_key=${API_KEY}&language=es-ES&page=1`),
+        fetch(`${BASE_URL}/movie/now_playing?api_key=${API_KEY}&language=es-ES&page=1&region=ES`),
+        fetch(`${BASE_URL}/movie/top_rated?api_key=${API_KEY}&language=es-ES&page=1`)
+      ]);
 
+      const [popularData, nowPlayingData, topRatedData] = await Promise.all([
+        popularRes.json(),
+        nowPlayingRes.json(),
+        topRatedRes.json()
+      ]);
 
+      setPopularMovies(popularData.results);
+      setNowPlayingMovies(nowPlayingData.results);
+      setTopRatedMovies(topRatedData.results);
+
+    } catch (err) {
+      console.error("Error fetching movie categories:", err);
+    }
+  };
+
+  fetchAllCategories();
+  }, []);
 
 
 
@@ -102,7 +133,6 @@ function App() {
         setmovies(data);
       });
 
-      
     fetch(
       `${BASE_URL}/movie/${randomMovie.id}/videos?api_key=${API_KEY}&language=es-ES`
     )
@@ -115,10 +145,6 @@ function App() {
         setTrailerKey(trailer?.key || null);
       });
   }, [randomMovie]);
-
-
-  
-
 
   //filtro de peliculas
   useEffect(() => {
@@ -173,7 +199,6 @@ function App() {
     fetchMovies();
   }, [SelectedCategory]);
 
-
   useEffect(() => {
     if (!weekmovies) return;
 
@@ -200,6 +225,9 @@ function App() {
             weekmovies={weekmovies}
             src={src}
             movies={movies}
+            PopularMovies={PopularMovies}
+            NowPlayingMovies={NowPlayingMovies}
+            TopRatedMovies={TopRatedMovies}
           />
         }
       />

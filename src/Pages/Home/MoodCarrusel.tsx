@@ -50,12 +50,12 @@ export default function CatalogueMovie({ movies, emolgiSelect }: HijoProps) {
 
         {emolgiSelect && (
           <h1 className={`text-white text-2xl font-bold px-5 py-2 rounded-xl bg-gradient-to-r  bg-white/5  backdrop-blur-sm border border-white/10 shadow-md w-fit ml-6 mb-4`}>
-            Mood {emolgiSelect}
+            {emolgiSelect} Mood 
           </h1>
         )}
         <div
           ref={scrollRef}
-          className=" w-full flex flex-row gap-5 px-6 overflow-x-auto scroll-smooth whitespace-nowrap select-none"
+          className=" w-full flex flex-row md:gap-0 gap-5 px-6 overflow-x-auto scroll-smooth whitespace-nowrap select-none"
           style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
         >
           <button
