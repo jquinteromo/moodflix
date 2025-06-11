@@ -1,53 +1,15 @@
 import { Routes, Route } from "react-router-dom";
 import { useEffect, useState } from "react";
 
+//Tipado estados 
+import type { MovieType } from "./Types/Types";
+import type { VideoResult } from "./Types/Types";
+import type { MovieDetails } from "./Types/Types";
+
 import Mylist from "./Pages/Mylist/Mylist";
 import Home from "./Pages/Home/Home";
 import Playmovie from "./Pages/Playmovie/Playmovie";
 import Infomovie from "./Pages/Infomovie/Infomovie";
-
-type MovieType = {
-  id: number;
-  title: string;
-  overview: string;
-  backdrop_path: string;
-  poster_path: string;
-  release_date: string;
-  vote_average: number;
-  genre_ids: number[];
-  vote_count: number;
-};
-
-type VideoResult = {
-  type: string;
-  site: string;
-  key: string;
-};
-
-type MovieDetails = {
-  id: number;
-  title: string;
-  overview: string;
-  release_date: string;
-  runtime: number;
-  vote_average: number;
-  vote_count: number;
-  backdrop_path: string;
-  poster_path: string;
-  spoken_languages: {
-    english_name: string;
-    iso_639_1: string;
-    name: string;
-  }[];
-  budget: number;
-  revenue: number;
-  genres: {
-    id: number;
-    name: string;
-  }[];
-  homepage: string | null;
-  original_language: string;
-};
 
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 const BASE_URL = "https://api.themoviedb.org/3";
@@ -60,13 +22,9 @@ function App() {
   const [infoMovie, setinfoMovie] = useState<MovieDetails | null>(null);
   const [PlusMovie, setPlusMovie] = useState<MovieType | null>(null);
 
-  useEffect(() => {
-    console.log(PlusMovie);
-  }, [PlusMovie]);
-
-  // const [moviess, setMoviess] = useState<MovieType[]>([]);
   const [srcBanner, setsrcBanner] = useState<string>("");
   const [srcPlayMv, setPlayMv] = useState<string>("");
+  
   const [movies, setmovies] = useState<MovieType[]>([]);
   const [weekmovies, setweekmovies] = useState<MovieType | null>(null);
   const [movieFavorite, setmovieFavorite] = useState<MovieType[]>([]);

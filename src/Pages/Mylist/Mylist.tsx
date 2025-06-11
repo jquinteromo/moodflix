@@ -1,15 +1,7 @@
 import { Play} from "lucide-react";
 
 import Navbar from "../../Components/Navbar";
-type MovieType = {
-  id: number;
-  title: string;
-  overview: string;
-  backdrop_path: string;
-  poster_path: string;
-  release_date: string;
-  vote_average: number;
-};
+import type { MovieType } from "../../Types/Types";
 
 interface HijoProps {
   movieFavorite: MovieType[];

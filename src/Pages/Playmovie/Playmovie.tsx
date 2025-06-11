@@ -3,18 +3,7 @@ import { Play, Star, Calendar, Bookmark, Heart } from "lucide-react";
 import Footer from "../Home/Footer";
 import { useEffect } from "react";
 
-type MovieType = {
-  id: number;
-  title: string;
-  overview: string;
-  backdrop_path: string;
-  poster_path: string;
-  release_date: string;
-  vote_average: number;
-  genre_ids: number[];
-  vote_count: number;
-};
-
+import type { MovieType } from "../../Types/Types";
 interface HijoProps {
   weekmovies: MovieType | null;
   srcPlayMv: string;

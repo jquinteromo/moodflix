@@ -5,20 +5,7 @@ import CatalogueMovie from "./MoodCarrusel";
 import Footer from "./Footer";
 import Carrusel from "./Carrusel";
 
-
-type MovieType = {
-  id: number;
-  title: string;
-  overview: string;
-  backdrop_path: string;
-  poster_path: string;
-  release_date: string;
-  vote_average: number;
-  genre_ids: number[];
-  vote_count: number;
-};
-
-
+import type { MovieType } from "../../Types/Types";
 
 interface HijoProps {
   weekmovies: MovieType | null;

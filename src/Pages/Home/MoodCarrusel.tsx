@@ -2,17 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { ChevronRight, ChevronLeft, Play, Plus } from "lucide-react";
 import { useRef } from "react";
 
-type MovieType = {
-  id: number;
-  title: string;
-  overview: string;
-  backdrop_path: string;
-  poster_path: string;
-  release_date: string;
-  vote_average: number;
-  genre_ids: number[];
-  vote_count: number;
-};
+import type { MovieType } from "../../Types/Types";
 
 interface HijoProps {
   movies: MovieType[];
