@@ -38,7 +38,7 @@ export default function Home({ weekmovies, srcBanner ,movies,PopularMovies,NowPl
   return (
     <div className="min-h-screen w-full bg-[#121212]" id="Home">
       <Navbar></Navbar>
-      <Banner weekmovies={weekmovies} src={srcBanner} />
+      <Banner weekmovies={weekmovies} src={srcBanner} plusmovie={plusmovie} />
       <CardMood  onCategorySelect={onCategorySelect}  />
       <CatalogueMovie  src={srcBanner} emolgiSelect={emolgiSelect} movies={movies} moviefavorite={moviefavorite} plusmovie={plusmovie}/>
         <Carrusel src={srcBanner} emolgiSelect={emolgiSelect} movies={NowPlayingMovies} moviefavorite={moviefavorite} plusmovie={plusmovie} title="🆕 Estrenos" ></Carrusel>

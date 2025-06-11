@@ -8,16 +8,19 @@ type MovieType = {
   poster_path: string;
   release_date: string;
   vote_average: number;
+  genre_ids: number[];
+  vote_count: number;
 };
 
 interface HijoProps {
   weekmovies: MovieType | null;
   src: string;
+  plusmovie: (movie: MovieType) => void;
 }
 
 import { Info, Play } from "lucide-react";
 
-export default function Banner({ weekmovies, src }: HijoProps) {
+export default function Banner({ weekmovies, src, plusmovie }: HijoProps) {
   const navigate = useNavigate();
 
   const goToPlaymovie = () => {
@@ -54,8 +57,8 @@ export default function Banner({ weekmovies, src }: HijoProps) {
             <div className=" flex gap-5 ">
               <div className="relative">
                 <input
-                  // onClickCapture={}
-                  onClick={goToPlaymovie}
+                  onClick={() => plusmovie(weekmovies)}
+                  onClickCapture={goToPlaymovie}
                   type="button"
                   value={"Mirar ahora"}
                   className="md:text-base text-xs pl-6  font-bold  border bg-gradient-to-r from-[#E8B454]   py-3 px-5 md:px-10 bg-[#D1942E] rounded-md cursor-pointer hover:opacity-85"
