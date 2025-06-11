@@ -54,6 +54,7 @@ export default function Banner({ weekmovies, src }: HijoProps) {
             <div className=" flex gap-5 ">
               <div className="relative">
                 <input
+                  // onClickCapture={}
                   onClick={goToPlaymovie}
                   type="button"
                   value={"Mirar ahora"}

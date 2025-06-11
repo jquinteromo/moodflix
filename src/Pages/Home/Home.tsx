@@ -22,7 +22,7 @@ type MovieType = {
 
 interface HijoProps {
   weekmovies: MovieType | null;
-  src: string;
+  srcBanner: string;
   movies: MovieType[];
   PopularMovies: MovieType[] 
   NowPlayingMovies :MovieType[]
@@ -30,18 +30,20 @@ interface HijoProps {
   onCategorySelect: (emolgi:string,categories:number[])=>void
   emolgiSelect:string 
   moviefavorite: (Movie:MovieType) =>void
+  plusmovie :(movie:MovieType)=> void
 }
 
-export default function Home({ weekmovies, src ,movies,PopularMovies,NowPlayingMovies,TopRatedMovies, onCategorySelect,emolgiSelect,moviefavorite}: HijoProps) {
+export default function Home({ weekmovies, srcBanner ,movies,PopularMovies,NowPlayingMovies,TopRatedMovies, onCategorySelect
+  ,emolgiSelect,moviefavorite,plusmovie}: HijoProps) {
   return (
     <div className="min-h-screen w-full bg-[#121212]" id="Home">
       <Navbar></Navbar>
-      <Banner weekmovies={weekmovies} src={src} />
+      <Banner weekmovies={weekmovies} src={srcBanner} />
       <CardMood  onCategorySelect={onCategorySelect}  />
-      <CatalogueMovie  src={src} emolgiSelect={emolgiSelect} movies={movies} moviefavorite={moviefavorite} />
-        <Carrusel src={src} emolgiSelect={emolgiSelect} movies={NowPlayingMovies} moviefavorite={moviefavorite}  title="🆕 Estrenos" ></Carrusel>
-        <Carrusel src={src} emolgiSelect={emolgiSelect} movies={PopularMovies} moviefavorite={moviefavorite} title="🔥 Populares" ></Carrusel>
-        <Carrusel src={src} emolgiSelect={emolgiSelect} movies={TopRatedMovies } moviefavorite={moviefavorite} title="⭐ Mejor valorado" ></Carrusel>
+      <CatalogueMovie  src={srcBanner} emolgiSelect={emolgiSelect} movies={movies} moviefavorite={moviefavorite} plusmovie={plusmovie}/>
+        <Carrusel src={srcBanner} emolgiSelect={emolgiSelect} movies={NowPlayingMovies} moviefavorite={moviefavorite} plusmovie={plusmovie} title="🆕 Estrenos" ></Carrusel>
+        <Carrusel src={srcBanner} emolgiSelect={emolgiSelect} movies={PopularMovies} moviefavorite={moviefavorite} plusmovie={plusmovie} title="🔥 Populares" ></Carrusel>
+        <Carrusel src={srcBanner} emolgiSelect={emolgiSelect} movies={TopRatedMovies } moviefavorite={moviefavorite} plusmovie={plusmovie} title="⭐ Mejor valorado" ></Carrusel>
       <Footer></Footer>
     </div>
   );

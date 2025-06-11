@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { ChevronRight, ChevronLeft, Play, Plus } from "lucide-react";
 import { useRef } from "react";
 
@@ -14,14 +15,20 @@ type MovieType = {
 };
 
 interface HijoProps {
-  movies:  MovieType[];
-  emolgiSelect: string 
-  src:string
-  title:string
-  moviefavorite: (Movie:MovieType) =>void
+  movies: MovieType[];
+  emolgiSelect: string;
+  src: string;
+  title: string;
+  moviefavorite: (Movie: MovieType) => void;
+  plusmovie: (movie: MovieType) => void;
 }
 
-export default function Carrusel({ movies, title,moviefavorite }: HijoProps) {
+export default function Carrusel({
+  movies,
+  title,
+  moviefavorite,
+  plusmovie,
+}: HijoProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const scrollLeft = () => {
@@ -32,19 +39,23 @@ export default function Carrusel({ movies, title,moviefavorite }: HijoProps) {
     scrollRef.current?.scrollBy({ left: 300, behavior: "smooth" });
   };
 
- 
+  const navigate = useNavigate();
+  const goToPlaymovie = () => {
+    navigate("/Playmovie/#trailer");
+  };
 
   return (
     <div className="flex flex-col gap-16 mb-10 mt-20 ">
-      <div
-        className={`relative  z-30 w-full transition-all duration-700 `}
-      >
-        <div className={`absolute inset-0 bg-gradient-to-b from-[#121212]/80  to-[#121212]/80  backdrop-blur-md pointer-events-none z-0`} />
+      <div className={`relative  z-30 w-full transition-all duration-700 `}>
+        <div
+          className={`absolute inset-0 bg-gradient-to-b from-[#121212]/80  to-[#121212]/80  backdrop-blur-md pointer-events-none z-0`}
+        />
 
-
-          <h1 className={`text-white text-2xl font-bold px-5 py-2 rounded-xl bg-gradient-to-r  bg-white/5  backdrop-blur-sm border border-white/10 shadow-md w-fit ml-6 mb-4`}>
-            {title}
-          </h1>
+        <h1
+          className={`text-white text-2xl font-bold px-5 py-2 rounded-xl bg-gradient-to-r  bg-white/5  backdrop-blur-sm border border-white/10 shadow-md w-fit ml-6 mb-4`}
+        >
+          {title}
+        </h1>
 
         <div
           ref={scrollRef}
@@ -75,13 +86,15 @@ export default function Carrusel({ movies, title,moviefavorite }: HijoProps) {
                   className="w-full h-full rounded-lg border border-white/10  cursor-pointer hover:brightness-50 transition-transform duration-400 group-hover:brightness-50 group-hover:-translate-y-1"
                 ></img>
                 <button
+                onClickCapture={goToPlaymovie}
+                  onClick={() => plusmovie(movie)}
                   className={` hover:opacity-55 group-hover:opacity-100 opacity-0  absolute top-1/2 right-16 hover:-translate-y-7 transition-transform duration-300 -translate-y-1/2  w-12 h-12 bg-black/90  backdrop-blur-md rounded-full flex items-center justify-center border bg-gradient-to-r from-[#f4cd56] to-[#b8861d] border-white/20 `}
                 >
                   <Play className={`w-6 h-6 text-white`} />
                 </button>
 
                 <button
-                onClickCapture={() => moviefavorite(movie)}
+                  onClickCapture={() => moviefavorite(movie)}
                   className={`absolute  top-2 right-2 group-hover:opacity-100 opacity-0 bg-black/70  hover:bg-black/90 w-8 h-8 rounded-full flex items-center justify-center transition-colors text-white hover:bg-black/90"
               `}
                 >
@@ -93,13 +106,14 @@ export default function Carrusel({ movies, title,moviefavorite }: HijoProps) {
                 <h1 className="text-[#D1D5DB] md:text-base text-xs font-bold mb-1 break-words whitespace-normal">
                   {movie.title}
                 </h1>
-                <h2 className="md:text-base text-sm text-[#D1D5DB] ">{movie.release_date.slice(0,4)}</h2>
+                <h2 className="md:text-base text-sm text-[#D1D5DB] ">
+                  {movie.release_date.slice(0, 4)}
+                </h2>
               </div>
             </div>
           ))}
         </div>
       </div>
-      
     </div>
   );
 }

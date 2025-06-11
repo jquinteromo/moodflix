@@ -24,30 +24,30 @@ type VideoResult = {
   key: string;
 };
 
-// type MovieDetails = {
-//   id: number;
-//   title: string;
-//   overview: string;
-//   release_date: string;
-//   runtime: number;
-//   vote_average: number;
-//   vote_count: number;
-//   backdrop_path: string;
-//   poster_path: string;
-//   spoken_languages: {
-//     english_name: string;
-//     iso_639_1: string;
-//     name: string;
-//   }[];
-//   budget: number;
-//   revenue: number;
-//   genres: {
-//     id: number;
-//     name: string;
-//   }[];
-//   homepage: string | null;
-//   original_language: string;
-// };
+type MovieDetails = {
+  id: number;
+  title: string;
+  overview: string;
+  release_date: string;
+  runtime: number;
+  vote_average: number;
+  vote_count: number;
+  backdrop_path: string;
+  poster_path: string;
+  spoken_languages: {
+    english_name: string;
+    iso_639_1: string;
+    name: string;
+  }[];
+  budget: number;
+  revenue: number;
+  genres: {
+    id: number;
+    name: string;
+  }[];
+  homepage: string | null;
+  original_language: string;
+};
 
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 const BASE_URL = "https://api.themoviedb.org/3";
@@ -57,10 +57,16 @@ function App() {
   const [PopularMovies, setPopularMovies] = useState<MovieType[]>([]);
   const [NowPlayingMovies, setNowPlayingMovies] = useState<MovieType[]>([]);
   const [TopRatedMovies, setTopRatedMovies] = useState<MovieType[]>([]);
+  const [infoMovie, setinfoMovie] = useState<MovieDetails | null>(null);
+  const [PlusMovie, setPlusMovie] = useState<MovieType | null>(null);
+
+  useEffect(() => {
+    console.log(PlusMovie);
+  }, [PlusMovie]);
 
   // const [moviess, setMoviess] = useState<MovieType[]>([]);
-  const [randomMovie, setRandomMovie] = useState<MovieType | null>(null);
-  const [src, setSrc] = useState<string>("");
+  const [srcBanner, setsrcBanner] = useState<string>("");
+  const [srcPlayMv, setPlayMv] = useState<string>("");
   const [movies, setmovies] = useState<MovieType[]>([]);
   const [weekmovies, setweekmovies] = useState<MovieType | null>(null);
   const [movieFavorite, setmovieFavorite] = useState<MovieType[]>([]);
@@ -80,13 +86,19 @@ function App() {
 
   const moviefavorite = (Movie: MovieType) => {
     setmovieFavorite((prev) =>
-      prev.find((fav) => fav.id === Movie.id) ? prev : [Movie, ...prev ]
+      prev.find((fav) => fav.id === Movie.id) ? prev : [Movie, ...prev]
     );
   };
 
-    useEffect(() => {
-    console.log(movieFavorite)
-  }, [movieFavorite]);
+  const plusmovie = (Movie: MovieType) => {
+    setPlusMovie(Movie);
+    const low = `https://image.tmdb.org/t/p/w300${Movie?.backdrop_path}`;
+    const highRes = `https://image.tmdb.org/t/p/original${Movie?.backdrop_path}`;
+    setPlayMv(low);
+    const img = new Image();
+    img.src = highRes;
+    img.onload = () => setPlayMv(highRes);
+  };
 
   //Filtrado peliculas de la semana
   useEffect(() => {
@@ -134,29 +146,6 @@ function App() {
 
     fetchAllCategories();
   }, []);
-
-  useEffect(() => {
-    if (!randomMovie) return;
-
-    fetch(`${BASE_URL}/movie/${randomMovie?.id}?api_key=${API_KEY}&language=es-ES
-    `)
-      .then((res) => res.json())
-      .then((data) => {
-        setmovies(data);
-      });
-
-    fetch(
-      `${BASE_URL}/movie/${randomMovie.id}/videos?api_key=${API_KEY}&language=es-ES`
-    )
-      .then((res) => res.json())
-      .then((videoData) => {
-        const trailer = videoData.results.find(
-          (vid: VideoResult) => vid.type === "Trailer" && vid.site === "YouTube"
-        );
-
-        setTrailerKey(trailer?.key || null);
-      });
-  }, [randomMovie]);
 
   //filtro de peliculas
   useEffect(() => {
@@ -211,15 +200,41 @@ function App() {
     fetchMovies();
   }, [SelectedCategory]);
 
+  // llamado video peli de semana
+  useEffect(() => {
+    if (!PlusMovie) return;
+
+    fetch(
+      `${BASE_URL}/movie/${PlusMovie?.id}/videos?api_key=${API_KEY}&language=es-ES`
+    )
+      .then((res) => res.json())
+      .then((videoData) => {
+        const trailer = videoData.results.find(
+          (vid: VideoResult) => vid.type === "Trailer" && vid.site === "YouTube"
+        );
+
+        setTrailerKey(trailer?.key || null);
+      });
+  }, [PlusMovie]);
+
+  //Imagen peli y carga de info
   useEffect(() => {
     if (!weekmovies) return;
 
-    const low = `https://image.tmdb.org/t/p/w300${weekmovies.backdrop_path}`;
-    const highRes = `https://image.tmdb.org/t/p/original${weekmovies.backdrop_path}`;
-    setSrc(low);
+    const low = `https://image.tmdb.org/t/p/w300${weekmovies?.backdrop_path}`;
+    const highRes = `https://image.tmdb.org/t/p/original${weekmovies?.backdrop_path}`;
+    setsrcBanner(low);
     const img = new Image();
     img.src = highRes;
-    img.onload = () => setSrc(highRes);
+    img.onload = () => setsrcBanner(highRes);
+
+    fetch(
+      `${BASE_URL}/movie/${weekmovies.id}?api_key=${API_KEY}&language=es-ES`
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        setinfoMovie(data);
+      });
 
     return () => {
       img.onload = null;
@@ -235,23 +250,27 @@ function App() {
             emolgiSelect={SelectedCategory?.emolgi ?? ""}
             onCategorySelect={handleCategoryFromChild}
             weekmovies={weekmovies}
-            src={src}
+            srcBanner={srcBanner}
             movies={movies}
             PopularMovies={PopularMovies}
             NowPlayingMovies={NowPlayingMovies}
             TopRatedMovies={TopRatedMovies}
             moviefavorite={moviefavorite}
+            plusmovie={plusmovie}
           />
         }
       />
-      <Route path="/Mylist"  element={<Mylist  movieFavorite={movieFavorite}/>} />
+      <Route
+        path="/Mylist"
+        element={<Mylist movieFavorite={movieFavorite} />}
+      />
       <Route
         path="/Playmovie"
         element={
           <Playmovie
-            // movieDetails={movieDetails}
-            randomMovie={randomMovie}
-            src={src}
+            moviefavorite={moviefavorite}
+            weekmovies={PlusMovie}
+            srcPlayMv={srcPlayMv}
             TrailerKey={TrailerKey}
           />
         }
@@ -260,9 +279,9 @@ function App() {
         path="/Infomovie"
         element={
           <Infomovie
-            randomMovie={randomMovie}
-            // movieDetails={movieDetails}
-            src={src}
+            moviefavorite={moviefavorite}
+            infoMovie={infoMovie}
+            src={srcBanner}
           />
         }
       />
