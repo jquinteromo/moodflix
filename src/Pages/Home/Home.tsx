@@ -18,13 +18,15 @@ interface HijoProps {
   emolgiSelect:string 
   moviefavorite: (Movie:MovieType) =>void
   plusmovie :(movie:MovieType)=> void
+    searchquery : (value:string) => void
+    querysrhmvie: MovieType[]
 }
 
 export default function Home({ weekmovies, srcBanner ,movies,PopularMovies,NowPlayingMovies,TopRatedMovies, onCategorySelect
-  ,emolgiSelect,moviefavorite,plusmovie}: HijoProps) {
+  ,emolgiSelect,moviefavorite,plusmovie,searchquery,querysrhmvie}: HijoProps) {
   return (
     <div className="min-h-screen w-full bg-[#121212]" id="Home">
-      <Navbar></Navbar>
+      <Navbar searchquery={searchquery} querysrhmvie={querysrhmvie} plusmovie={plusmovie}></Navbar>
       <Banner weekmovies={weekmovies} src={srcBanner} plusmovie={plusmovie} />
       <CardMood  onCategorySelect={onCategorySelect}  />
       <CatalogueMovie  src={srcBanner} emolgiSelect={emolgiSelect} movies={movies} moviefavorite={moviefavorite} plusmovie={plusmovie}/>

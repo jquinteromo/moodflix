@@ -8,8 +8,8 @@ interface HijoProps {
 }
 export default function Mylist({ movieFavorite }: HijoProps) {
   return (
-    <div className=" flex flex-col ml-4">
-      <Navbar></Navbar>
+    <div className=" flex flex-col ml-4 mb-6">
+      <Navbar querysrhmvie={[]}></Navbar>
         <h1 className={`text-white text-2xl font-bold px-2 py-2 rounded-xl bg-gradient-to-r  bg-white/5  backdrop-blur-sm border border-white/10 shadow-md w-fit  mb-4 mt-36`}>
         🍿 Mi Lista
           </h1>

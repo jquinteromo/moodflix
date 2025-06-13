@@ -1,11 +1,16 @@
 import { Search, Heart } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import Querymovie from "../Pages/Home/Querymovie";
+import type { MovieType } from "../Types/Types";
 
-type NavbarProps = {
+interface HijoProps {
+  searchquery? : (value:string) => void
   variant?: "Playmovie";
-};
+  querysrhmvie: MovieType[]
+  plusmovie? :(movie:MovieType)=> void
+}
 
-export default function Navbar({ variant }: NavbarProps) {
+export default function Navbar({searchquery, variant ,querysrhmvie,plusmovie}: HijoProps) {
   const navigate = useNavigate();
 
   const background =
@@ -49,11 +54,13 @@ export default function Navbar({ variant }: NavbarProps) {
       <div className=" inline-flex gap-4 md:ml-20">
         <div className="relative">
           <input
+          onChange={(e)=> searchquery?.(e.target.value)}
             type="search"
             placeholder="Search movies..."
-            className="w-12 md:placeholder:opacity-100 placeholder:opacity-0 md:w-56  px-2 md:px-9 py-2  bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:border-blue-500 focus:bg-white/15 transition-all"
+            className="w-12 md:placeholder:opacity-100 placeholder:opacity-0 md:w-56  px-2 md:px-9 py-2  bg-white/10 border border-white/20  rounded-t-lg text-white placeholder-white/50 focus:outline-none focus:border-blue-500 focus:bg-white/15 transition-all"
           />
           <Search className="absolute left-4 md:left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-white/50" />
+        <Querymovie querysrhmvie={querysrhmvie} plusmovie={plusmovie}></Querymovie>
         </div>
         <div className="relative">
           <input

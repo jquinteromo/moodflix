@@ -6,6 +6,7 @@ interface HijoProps {
   weekmovies: MovieType | null;
   src: string;
   plusmovie: (movie: MovieType) => void;
+
 }
 
 export default function Banner({ weekmovies, src, plusmovie }: HijoProps) {

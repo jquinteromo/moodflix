@@ -53,7 +53,7 @@ export default function Playmovie({
 
   return (
     <div>
-      <Navbar variant="Playmovie"></Navbar>
+      <Navbar  variant="Playmovie" querysrhmvie={[]}></Navbar>
       <div className="flex flex-col gap-10">
         <div className=" relative w-full h-[50vh] md:h-[70vh]  aspect-video overflow-hidden">
           <img

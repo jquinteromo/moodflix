@@ -31,7 +31,7 @@ export default function Infomovie({ infoMovie, src }: HijoProps) {
 
   return (
     <div>
-      <Navbar variant="Playmovie"></Navbar>
+      <Navbar variant="Playmovie" querysrhmvie={[]} ></Navbar>
       <div className="">
         <div className=" relative w-full h-[50vh] md:h-[70vh]  aspect-video overflow-hidden">
           <img

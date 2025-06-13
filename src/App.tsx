@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-//Tipado estados 
+//Tipado estados
 import type { MovieType } from "./Types/Types";
 import type { VideoResult } from "./Types/Types";
 import type { MovieDetails } from "./Types/Types";
@@ -24,7 +24,9 @@ function App() {
 
   const [srcBanner, setsrcBanner] = useState<string>("");
   const [srcPlayMv, setPlayMv] = useState<string>("");
-  
+
+  const [querysrhmvie, setquerysrhmvie] = useState<MovieType[]>([]);
+  const [valuesearchmvie, setvaluesearchmvie] = useState<string>("");
   const [movies, setmovies] = useState<MovieType[]>([]);
   const [weekmovies, setweekmovies] = useState<MovieType | null>(null);
   const [movieFavorite, setmovieFavorite] = useState<MovieType[]>([]);
@@ -48,6 +50,10 @@ function App() {
     );
   };
 
+  const searchquery = (value: string) => {
+    setvaluesearchmvie(value);
+  };
+
   const plusmovie = (Movie: MovieType) => {
     setPlusMovie(Movie);
     const low = `https://image.tmdb.org/t/p/w300${Movie?.backdrop_path}`;
@@ -57,6 +63,30 @@ function App() {
     img.src = highRes;
     img.onload = () => setPlayMv(highRes);
   };
+
+  //Busqueda de Películas
+  useEffect(() => {
+    const query = valuesearchmvie.trim().toLowerCase();
+    const delayDebounce = setTimeout(() => {
+      fetch(
+        `${BASE_URL}/search/movie?api_key=${API_KEY}&query=${valuesearchmvie}&language=es-ES&page=1`
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          const filtered = (data.results || []).filter((movie: MovieType) =>
+            movie.title?.toLowerCase().includes(query)
+          );
+       const recortomovie =   filtered.slice(0, 4);
+          setquerysrhmvie(recortomovie);
+        });
+    }, 400);
+    return () => clearTimeout(delayDebounce);
+  }, [valuesearchmvie]);
+
+  useEffect(() => {
+    if (!querysrhmvie) return;
+    console.log(querysrhmvie);
+  }, [querysrhmvie]);
 
   //Filtrado peliculas de la semana
   useEffect(() => {
@@ -215,6 +245,8 @@ function App() {
             TopRatedMovies={TopRatedMovies}
             moviefavorite={moviefavorite}
             plusmovie={plusmovie}
+            searchquery={searchquery}
+            querysrhmvie={querysrhmvie}
           />
         }
       />
