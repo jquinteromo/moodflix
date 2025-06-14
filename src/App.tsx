@@ -252,7 +252,7 @@ function App() {
       />
       <Route
         path="/Mylist"
-        element={<Mylist movieFavorite={movieFavorite} />}
+        element={<Mylist movieFavorite={movieFavorite}    plusmovie={plusmovie}/>}
       />
       <Route
         path="/Playmovie"
